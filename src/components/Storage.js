@@ -28,15 +28,25 @@ export default class Storage extends Component{
         this.addFilePathToDatabase = this.addFilePathToDatabase.bind(this)
     }
 
-    setName(e){
-        this.setState({name: e.target.value})
+    setName = (e) => {
+        this.setState((prevState, props) => {
+            return {
+                ...prevState,
+                name: e.target.value
+            }
+        })
     }
 
-    setFile(e){
-        this.setState({file: e.target.files[0]})
+    setFile = (e) => {
+        this.setState((prevState, props) => {
+            return {
+                ...prevState,
+                file: e.target.files[0]
+            }
+        })
     }
 
-    uploadFile(){
+    uploadFile = () => {
         const file = this.state.file
         console.log(file)
         this.state.ref.child(this.state.name).put(file).then((snapshot) => {
@@ -45,7 +55,7 @@ export default class Storage extends Component{
         })
     }
 
-    addFilePathToDatabase(){
+    addFilePathToDatabase = () => {
         const formattedDate = new Date();
 
         this.state.database.collection("files").add({
