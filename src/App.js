@@ -3,6 +3,8 @@ import './App.css';
 import firebase from 'firebase'
 import StyledFirebaseAuth from 'react-firebaseui/StyledFirebaseAuth'
 import Storage from './components/Storage'
+import Header from './components/Header'
+import Body from './components/Body'
 
 const config = {
 	apiKey: "AIzaSyD3taQFpVwhb6VOgWTn62gO725-qknCc5Q",
@@ -51,7 +53,7 @@ class App extends Component {
 	}
 
 	render() {
-		if (!this.state.isSignedIn) {
+		/*if (!this.state.isSignedIn) {
 			return(
 				<div className="App">
 					<header className="App-header">
@@ -74,7 +76,13 @@ class App extends Component {
 					<button onClick={() => firebase.auth().signOut()}>Sign-out</button>
 				</header>
 			</div>
-		);
+		);*/
+		return (
+			<div>
+				<Header />
+				<Body />
+			</div>
+		)
 	}
 }
 

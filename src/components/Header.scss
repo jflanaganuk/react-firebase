@@ -1,0 +1,79 @@
+:local(body){
+    background-color: #DDD;
+    color: #FFF;
+}
+
+:local(.headerContainer){
+    background-color: #232f3e;
+    border-bottom-left-radius: 1rem;
+    border-bottom-right-radius: 1rem;
+}
+
+:local(.topbar){
+    display: grid;
+    grid-template-areas: "logo searchbar loginarea";
+}
+
+:local(.logoContainer){
+    grid-area: logo;
+    margin-top: 0;
+    width: 12rem;
+    padding: 1rem;
+}
+
+:local(.logo){
+    width: 100%;
+    height: auto;
+}
+
+:local(.loginContainer){
+    grid-area: loginarea;
+    display: flex;
+    flex-direction: row;
+    background-color: #384f6b;
+    margin: 1.5rem;
+}
+
+:local(.userInfo){
+    flex: 1;
+    display: flex;
+    align-self: center;
+    justify-content: center;
+    padding: 1rem;
+}
+
+:local(.logInOut){
+    flex: 1;
+    display: flex;
+    align-self: center;
+    justify-content: flex-end;
+    padding: 1rem;
+}
+
+:local(.navbar){
+    background-color: #34404f;
+    height: 1rem;
+    border-bottom-left-radius: 1rem;
+    border-bottom-right-radius: 1rem;
+}
+
+:local(.headerButton){
+    background-color: #34404f;
+    color: #DDD;
+    border: 1px solid #FFF;
+    width: 4rem;
+    margin: 0.1rem;
+    &:hover{
+        background-color: #DDD;
+        color: #34404f;
+        cursor: pointer;
+    }
+}
+
+
+@media only screen and (min-width: 1280px){
+    :local(.headerContainer){
+        width: 1280px;
+        margin: auto;
+    }
+}
