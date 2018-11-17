@@ -11,7 +11,7 @@
 
 :local(.topbar){
     display: grid;
-    grid-template-areas: "logo searchbar loginarea";
+    grid-template-areas: "logo search";
 }
 
 :local(.logoContainer){
@@ -26,36 +26,13 @@
     height: auto;
 }
 
-:local(.loginContainer){
-    grid-area: loginarea;
-    display: flex;
-    flex-direction: row;
-    background-color: #384f6b;
-    margin: 1.5rem;
-}
-
-:local(.userInfo){
-    flex: 1;
-    display: flex;
-    align-self: center;
-    justify-content: center;
-    padding: 1rem;
-}
-
-:local(.logInOut){
-    flex: 1;
-    display: flex;
-    align-self: center;
-    justify-content: flex-end;
-    padding: 1rem;
-}
-
 :local(.navbar){
     background-color: #34404f;
     border-bottom-left-radius: 0.5rem;
     border-bottom-right-radius: 0.5rem;
     overflow: hidden;
     padding-left: 1rem;
+    padding-right: 1rem;
     & a{
         float: left;
         display: block;
@@ -67,6 +44,9 @@
         &:hover{
             background-color: #ddd;
             color: black;
+        }
+        &.right{
+            float: right;
         }
     }
     & .active{
@@ -91,6 +71,27 @@
     }
 }
 
+:local(.searchContainer){
+    grid-area: "search";
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    padding: 1rem;
+}
+
+:local(.searchContainerInput){
+    padding: 0.5rem;
+    margin-right: 0.5rem;
+    background: transparent;
+    border: none;
+    border-bottom: 1px solid white;
+    color: white;
+    font-size: 1.5rem;
+    &.hidden{
+        display: none;
+    }
+}
+
 @media only screen and (max-width: 600px){
     :local(.navbar){
         & a{
@@ -107,7 +108,7 @@
             & a{
                 &.icon{
                     position: absolute;
-                    right: 0;
+                    right: 1rem;
                     top: 0;
                 }
                 float: none;
@@ -115,6 +116,13 @@
                 text-align: left;
             }
         }
+    }
+    :local(.logoContainer){
+        display: block;
+        margin: auto;
+    }
+    :local(.topbar){
+        display: inline;
     }
 }
 
