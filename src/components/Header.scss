@@ -58,6 +58,12 @@
     }
 }
 
+:local(.sticky){
+    position: fixed;
+    top: 0;
+    width: calc(100% - 2rem);
+}
+
 :local(.headerButton){
     background-color: #34404f;
     color: #DDD;
@@ -115,6 +121,9 @@
                 display: block;
                 text-align: left;
             }
+            &:local(.sticky){
+                position: fixed;
+            }
         }
     }
     :local(.logoContainer){
@@ -130,5 +139,8 @@
     :local(.headerContainer){
         width: 1280px;
         margin: auto;
+    }
+    :local(.sticky){
+        width: calc(1280px - 2rem);
     }
 }

@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import './App.css';
 import firebase from 'firebase'
-import StyledFirebaseAuth from 'react-firebaseui/StyledFirebaseAuth'
-import Storage from './components/Storage'
+import Signin from './components/body/Signin'
+import Footer from './components/Footer'
 import Header from './components/Header'
 import Body from './components/Body'
 
@@ -25,64 +25,33 @@ class App extends Component {
 			isSignedIn: false
 		}
 
-		this.uiConfig = {
-			signInFlow: 'popup',
-			signInSuccessUrl: '/signedIn',
-			signInOptions: [
-				firebase.auth.GoogleAuthProvider.PROVIDER_ID,
-			],
-			callbacks: {
-				signInSuccessWithAuthResult: () => false
+		this.setSignIn = this.setSignIn.bind(this)
+	}
+
+	setSignIn(user){
+		this.setState((prevState, props) => {
+			return {
+				...prevState,	
+				isSignedIn: !!user
 			}
-		}
-	}
-
-	componentDidMount(){
-		this.unregisterAuthObserver = firebase.auth().onAuthStateChanged(
-			(user) => this.setState((prevState, props) => {
-				return {
-					...prevState,	
-					isSignedIn: !!user
-				}
-			})
-		)
-	}
-
-	componentWillUnmount(){
-		this.unregisterAuthObserver()
+		})
 	}
 
 	render() {
-		/*if (!this.state.isSignedIn) {
-			return(
-				<div className="App">
-					<header className="App-header">
-						<h1>Uploadr</h1>
-						<p>Please sign-in:</p>
-						<StyledFirebaseAuth
-							uiConfig={this.uiConfig}
-							firebaseAuth={firebase.auth()}
-						/>
-					</header>
-				</div>
-			)
-		}
-		return (
-			<div className="App">
-				<header className="App-header">
-					<h1>Uploadr</h1>
-					<p>Welcome {firebase.auth().currentUser.displayName}! You are now signed-in!</p>
-					<Storage/>
-					<button onClick={() => firebase.auth().signOut()}>Sign-out</button>
-				</header>
-			</div>
-		);*/
 		return (
 			<div>
 				<Header />
-				<Body />
+				{(!this.state.isSignedIn) 
+				? 
+					<Signin
+						setSignIn={this.setSignIn}
+					/>
+				:
+					<Body />
+				}
+				<Footer />
 			</div>
-		)
+		);
 	}
 }
 
