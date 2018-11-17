@@ -1,5 +1,4 @@
 :local(.bodyContainer){
-    border: 1px solid #34404f;
     //TODO - remove height component when content is filled
     height: 70vh;
     margin-left: 1rem;
@@ -8,7 +7,7 @@
 
 @media only screen and (min-width: 1280px){
     :local(.bodyContainer){
-        width: calc(1280px - 2rem);
+        width: 1280px;
         margin: auto;
     }
 }
