@@ -83,6 +83,7 @@
     align-items: center;
     justify-content: flex-end;
     padding: 1rem;
+    cursor: pointer;
 }
 
 :local(.searchContainerInput){
@@ -135,7 +136,7 @@
     }
 }
 
-@media only screen and (min-width: 1280px){
+@media only screen and (min-width: 1300px){
     :local(.headerContainer){
         width: 1280px;
         margin: auto;

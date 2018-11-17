@@ -38,6 +38,7 @@ export default class Searchbar extends Component{
                 />
                 <FontAwesomeIcon 
                     icon={faSearch}
+                    className="fa-2x"
                 />
             </div>
         )
