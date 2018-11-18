@@ -7,14 +7,17 @@ export default class UserInfo extends Component{
         const user = firebase.auth().currentUser;
         return (
             <div className={styles.avatarContainer}>
+                <h1>User Info:</h1>
                 <table>
                     <tbody>
                         <tr>
                             <td rowSpan={5}>
                                 <img 
                                     src={user.photoURL}
+                                    alt="Avatar"
                                     width={64}
                                     height={64}
+                                    style={{paddingRight: '1rem'}}
                                 />
                             </td>
                         </tr>
