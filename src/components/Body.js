@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import styles from './Body.scss'
+import UserInfo from './body/UserInfo'
 
 export default class Body extends Component{
     render(){
@@ -7,7 +8,7 @@ export default class Body extends Component{
             <div className={styles.bodyContainer}>
                 <div className={styles.bodyLeft}>
                     <div className={styles.topLeft}>
-                        <div className={styles.avatarContainer}></div>
+                        <UserInfo/>
                         <div className={styles.uploadStats}></div>
                     </div>
                     <div className={styles.uploadForm}></div>
