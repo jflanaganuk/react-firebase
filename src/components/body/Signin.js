@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import firebase from 'firebase'
 import StyledFirebaseAuth from 'react-firebaseui/StyledFirebaseAuth'
+import styles from '../Body.scss';
 
 export default class Signin extends Component{
 
@@ -30,10 +31,12 @@ export default class Signin extends Component{
 
     render(){
         return(
-            <StyledFirebaseAuth
-                uiConfig={this.uiConfig}
-                firebaseAuth={firebase.auth()}
-            />
+            <div className={styles.signInContainer}>
+                <StyledFirebaseAuth
+                    uiConfig={this.uiConfig}
+                    firebaseAuth={firebase.auth()}
+                />
+            </div>
         )
     }
 

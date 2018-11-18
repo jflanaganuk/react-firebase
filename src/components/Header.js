@@ -17,7 +17,10 @@ export default class Header extends Component{
                     </div>
                     <Searchbar />
                 </div>
-                <Navbar />
+                <Navbar 
+                    signedIn={this.props.signedIn}
+                    setSignIn={this.props.setSignIn}
+                />
             </div>
         )
     }

@@ -40,7 +40,10 @@ class App extends Component {
 	render() {
 		return (
 			<div>
-				<Header />
+				<Header 
+					signedIn={this.state.isSignedIn}
+					setSignIn={this.setSignIn}
+				/>
 				{(!this.state.isSignedIn) 
 				? 
 					<Signin

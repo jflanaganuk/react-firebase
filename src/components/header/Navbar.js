@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import styles from '../Header.scss'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faBars } from '@fortawesome/free-solid-svg-icons'
+import firebase from 'firebase'
 
 export default class Navbar extends Component{
 
@@ -21,10 +22,14 @@ export default class Navbar extends Component{
         window.addEventListener('scroll', this.setScroll)
         this.navbar = document.getElementById('navbar')
         this.sticky = this.navbar.offsetTop
+        this.unregisterAuthObserver = firebase.auth().onAuthStateChanged(
+            (user) => this.props.setSignIn(!!user)
+        )
     }
 
     componentWillUnmount(){
         window.removeEventListener('scroll', this.setScroll)
+        this.unregisterAuthObserver()
     }
 
     setExpanded(input){
@@ -69,9 +74,14 @@ export default class Navbar extends Component{
                 <a href="#portal">Portal</a>
                 <a href="#about">About</a>
                 <a href="#contact">Contact</a>
-                <a href="#login" className="right">Login</a>
-                <a href="#signup" className="right">Sign Up</a>
-                <a href={void(0)} className="icon" onClick={() => this.setExpanded(!this.state.expanded)}>
+                {(this.props.signedIn) &&
+                <a href="#" className="right" onClick={() => firebase.auth().signOut()}>Logout</a> // eslint-disable-line
+                }
+                {(this.props.signedIn) &&
+                <span className={styles.welcomeMessage}>Welcome {firebase.auth().currentUser.displayName} !</span>
+                }
+                <a href="#" className="icon" onClick={() => this.setExpanded(!this.state.expanded)}> {// eslint-disable-line
+                }
                     <FontAwesomeIcon icon={faBars} />
                 </a>
             </div>
