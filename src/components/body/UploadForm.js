@@ -60,18 +60,22 @@ export default class UploadForm extends Component{
     uploadFiles(){
         //TODO - progress
         const files = this.state.files
-        const d = new Date()
-        const seconds = Math.round(d.getTime() / 1000)
-        console.log(files)
-        Array.from(files).map((file, key) => {
-            const name = seconds + this.state.name + key
-            console.log(file)
-            this.state.ref.child(name).put(file).then((snapshot) => {
-                console.log("uploaded file")
-                console.log(snapshot)
-                this.addFilePathToDatabase(key, name)
+        if (files !== null) {
+            const d = new Date()
+            const seconds = Math.round(d.getTime() / 1000)
+            console.log(files)
+            Array.from(files).map((file, key) => {
+                const name = seconds + this.state.name + key
+                console.log(file)
+                this.state.ref.child(name).put(file).then((snapshot) => {
+                    console.log("uploaded file")
+                    console.log(snapshot)
+                    this.addFilePathToDatabase(key, name)
+                })
             })
-        })
+        } else {
+            alert("You must select files to upload!")
+        }
     }
 
     addFilePathToDatabase(key, name){
@@ -98,32 +102,31 @@ export default class UploadForm extends Component{
     render(){
         return (
             <div>
-                <h2>Upload New File:</h2>
+                <h2>Upload New File(s):</h2>
                 <table>
                     <tbody>
                         <tr>
                             <td>Name</td>
                             <td>:</td>
-                            <td><input type="text" onChange={this.setName}/></td>
+                            <td><input className={styles.uploadName} type="text" onChange={this.setName} placeholder="Enter file name"/></td>
                         </tr>
                         <tr>
                             <td>File(s)</td>
                             <td>:</td>
-                            <td><input type="file" onChange={this.setFile} multiple={true}/></td>
+                            <td><input className={styles.uploadFiles} type="file" onChange={this.setFile} multiple={true}/></td>
                         </tr>
                         <tr>
                             <td>Public</td>
                             <td>:</td>
-                            <td><input type="checkbox" onChange={this.setPublic} defaultChecked={true}/> (If checked, anyone can view your file)</td>
+                            <td><input className={styles.uploadCheckbox} type="checkbox" onChange={this.setPublic} defaultChecked={true}/> (If checked, anyone can view your file)</td>
                         </tr>
                         <tr>
-                            <td>Combine into album</td>
+                            <td>Album</td>
                             <td>:</td>
-                            <td><input type="checkbox" onChange={this.setAlbum}/> (If checked, all files will be presented as one entry)</td>
+                            <td><input className={styles.uploadCheckbox} type="checkbox" onChange={this.setAlbum}/> (If checked, all files will be presented as one entry)</td>
                         </tr>
                         <tr>
-                            <td colSpan={2}></td>
-                            <td><input type="submit" onClick={this.uploadFiles}/></td>
+                            <td colSpan={3}><input className={styles.uploadButton} type="submit" onClick={this.uploadFiles} value="Upload"/></td>
                         </tr>
                     </tbody>
                 </table>

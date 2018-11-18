@@ -1,6 +1,5 @@
 :local(.bodyContainer){
     //TODO - remove height component when content is filled
-    height: 70vh;
     margin-left: 1rem;
     margin-right: 1rem;
     color: black;
@@ -9,6 +8,39 @@
 
 :local(.signInContainer){
     padding-top: 10rem;
+}
+
+:local(.uploadName){
+    padding: 0.5rem;
+    width: 100%;
+    font-size: 1rem;
+    border: none;
+    height: 1.5rem;
+}
+
+:local(.uploadFiles){
+    padding: 0.5rem;
+    width: 100%;
+    font-size: 1rem;
+    height: 1.5rem;
+}
+
+:local(.uploadCheckbox){
+    padding: 0.5rem;
+    font-size: 1rem;
+    margin-bottom: 0.5rem;
+}
+
+:local(.uploadButton){
+    padding: 1rem;
+    background-color: #4C93AF;
+    color: white;
+    width: 100%;
+    font-size: 1.5rem;
+    cursor: pointer;
+    &:hover{
+        background-color: rgb(118, 196, 226);
+    }
 }
 
 @media only screen and (min-width: 1300px){
