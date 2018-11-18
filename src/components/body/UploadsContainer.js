@@ -2,6 +2,8 @@ import React, { Component } from 'react'
 import ReactTable from 'react-table'
 import firebase from 'firebase'
 import 'react-table/react-table.css'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faCheck, faTimes, faEye, faLock, faLockOpen } from '@fortawesome/free-solid-svg-icons'
 
 export default class UploadsContainer extends Component{
 
@@ -32,8 +34,7 @@ export default class UploadsContainer extends Component{
                 const formattedDoc = {
                     name: doc.data().albumName,
                     date: new Date(doc.data().date.seconds*1000).toString(),
-                    public: (doc.data().public ? 'True' : 'False'),
-                    album: (doc.data().album ? 'True' : 'False'),
+                    public: (doc.data().public ? <FontAwesomeIcon icon={faLockOpen}/> : <FontAwesomeIcon icon={faLock}/>),
                     key: doc.data().key
                 }
                 formattedData.push(formattedDoc)
@@ -55,6 +56,11 @@ export default class UploadsContainer extends Component{
     render(){
         const columns = [
             {
+                Header: 'View',
+                Cell: <FontAwesomeIcon icon={faEye}/>,
+                width: 48
+            },
+            {
                 Header: 'Name',
                 accessor: 'name'
             },
@@ -64,11 +70,13 @@ export default class UploadsContainer extends Component{
             },
             {
                 Header: 'Public',
-                accessor: 'public'
+                accessor: 'public',
+                width: 64
             },
             {
-                Header: 'Album',
-                accessor: 'album'
+                Header: 'Delete',
+                Cell: <FontAwesomeIcon icon={faTimes}/>,
+                width: 64
             }
         ]
         return (

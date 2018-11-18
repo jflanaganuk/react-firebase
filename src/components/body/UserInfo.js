@@ -1,19 +1,22 @@
 import React, { Component } from 'react'
 import firebase from 'firebase'
 import styles from '../Body.scss'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faCheck, faTimes } from '@fortawesome/free-solid-svg-icons'
 
 export default class UserInfo extends Component{
     render(){
         const user = firebase.auth().currentUser;
+        console.log(user)
         return (
             <div className={styles.avatarContainer}>
                 <h1>User Info:</h1>
                 <table>
                     <tbody>
                         <tr>
-                            <td rowSpan={5}>
+                            <td rowSpan={6}>
                                 <img 
-                                    src={user.photoURL}
+                                    src={(user.photoURL != null) ? user.photoURL : require('../../assets/avatar.png')}
                                     alt="Avatar"
                                     width={64}
                                     height={64}
@@ -40,6 +43,11 @@ export default class UserInfo extends Component{
                             <td>Last sign in</td>
                             <td>:</td>
                             <td>{user.metadata.lastSignInTime}</td>
+                        </tr>
+                        <tr>
+                            <td>Verified</td>
+                            <td>:</td>
+                            <td>{(user.emailVerified ? <FontAwesomeIcon icon={faCheck}/> : <FontAwesomeIcon icon={faTimes}/>)}</td>
                         </tr>
                     </tbody>
                 </table>
