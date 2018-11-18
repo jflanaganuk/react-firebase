@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import styles from './Body.scss'
 import UserInfo from './body/UserInfo'
 import UploadForm from './body/UploadForm'
+import UploadsContainer from './body/UploadsContainer'
 
 export default class Body extends Component{
     render(){
@@ -17,7 +18,9 @@ export default class Body extends Component{
                     </div>
                 </div>
                 <div className={styles.bodyRight}>
-                    <div className={styles.uploadsContainer}></div>
+                    <div className={styles.uploadsContainer}>
+                        <UploadsContainer/>
+                    </div>
                 </div>
             </div>
         )
