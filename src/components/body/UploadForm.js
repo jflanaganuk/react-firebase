@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import firebase from 'firebase'
 import styles from '../Body.scss'
+import UploadButton from './UploadButton'
 
 export default class UploadForm extends Component{
     
@@ -22,7 +23,8 @@ export default class UploadForm extends Component{
             ref: imagesRef,
             database: database,
             public: true,
-            album: false
+            album: false,
+            uploading: false
         }
 
         this.uploadFiles = this.uploadFiles.bind(this)
@@ -31,6 +33,7 @@ export default class UploadForm extends Component{
         this.addFilePathToDatabase = this.addFilePathToDatabase.bind(this)
         this.setPublic = this.setPublic.bind(this)
         this.setAlbum = this.setAlbum.bind(this)
+        this.setUploading = this.setUploading.bind(this)
     }
 
     setFile = (e) => {
@@ -57,10 +60,20 @@ export default class UploadForm extends Component{
         })
     }
 
+    setUploading(input){
+        this.setState((prevState, props) => {
+            return {
+                ...prevState,
+                uploading: input
+            }
+        })
+    }
+
     uploadFiles(){
         //TODO - progress
         const files = this.state.files
         if (files !== null) {
+            this.setUploading(true)
             const d = new Date()
             const seconds = Math.round(d.getTime() / 1000)
             console.log(files)
@@ -72,6 +85,7 @@ export default class UploadForm extends Component{
                     console.log(snapshot)
                     this.addFilePathToDatabase(key, name)
                 })
+                return null
             })
         } else {
             alert("You must select files to upload!")
@@ -93,9 +107,12 @@ export default class UploadForm extends Component{
         .then((docRef) => {
             console.log("Document written with ID: ", docRef.id)
             console.log(docRef)
+            this.setUploading(false)
+            this.props.fetchUploads()
         })
         .catch((error) => {
             console.error(error)
+            this.setUploading(false)
         })
     }
     
@@ -126,7 +143,12 @@ export default class UploadForm extends Component{
                             <td><input className={styles.uploadCheckbox} type="checkbox" onChange={this.setAlbum}/> (If checked, all files will be presented as one entry)</td>
                         </tr>
                         <tr>
-                            <td colSpan={3}><input className={styles.uploadButton} type="submit" onClick={this.uploadFiles} value="Upload"/></td>
+                            <td colSpan={3}>
+                                <UploadButton
+                                    uploadFiles={this.uploadFiles}
+                                    uploading={this.state.uploading}
+                                />
+                             </td>
                         </tr>
                     </tbody>
                 </table>
