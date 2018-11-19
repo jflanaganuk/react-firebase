@@ -7,7 +7,6 @@ import { faCheck, faTimes } from '@fortawesome/free-solid-svg-icons'
 export default class UserInfo extends Component{
     render(){
         const user = firebase.auth().currentUser;
-        console.log(user)
         return (
             <div className={styles.avatarContainer}>
                 <h1>User Info:</h1>

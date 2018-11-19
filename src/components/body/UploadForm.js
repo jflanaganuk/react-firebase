@@ -24,7 +24,8 @@ export default class UploadForm extends Component{
             database: database,
             public: true,
             album: false,
-            uploading: false
+            uploading: false,
+            uploadProgress: 0
         }
 
         this.uploadFiles = this.uploadFiles.bind(this)
@@ -35,6 +36,7 @@ export default class UploadForm extends Component{
         this.setAlbum = this.setAlbum.bind(this)
         this.setUploading = this.setUploading.bind(this)
         this.resetForm = this.resetForm.bind(this)
+        this.setProgress = this.setProgress.bind(this)
     }
 
     setFile = (e) => {
@@ -70,6 +72,15 @@ export default class UploadForm extends Component{
         })
     }
 
+    setProgress(input){
+        this.setState((prevState, props) => {
+            return {
+                ...prevState,
+                progress: input
+            }
+        })
+    }
+
     uploadFiles(){
         //TODO - progress
         const files = this.state.files
@@ -77,13 +88,15 @@ export default class UploadForm extends Component{
             this.setUploading(true)
             const d = new Date()
             const seconds = Math.round(d.getTime() / 1000)
-            console.log(files)
             Array.from(files).map((file, key) => {
                 const name = seconds + this.state.name + key
-                console.log(file)
-                this.state.ref.child(name).put(file).then((snapshot) => {
-                    console.log("uploaded file")
-                    console.log(snapshot)
+                let uploadTask = this.state.ref.child(name).put(file)
+                uploadTask.on('state_changed', (snapshot) => {
+                    const progress = (snapshot.bytesTransferred/snapshot.totalBytes) * 100
+                    this.setProgress(progress)
+                }, (error) => {
+                    console.error(error)
+                }, () => {
                     this.addFilePathToDatabase(key, name)
                 })
                 return null
@@ -106,8 +119,6 @@ export default class UploadForm extends Component{
             key: key
         })
         .then((docRef) => {
-            console.log("Document written with ID: ", docRef.id)
-            console.log(docRef)
             this.setUploading(false)
             this.props.fetchUploads()
             this.resetForm()
@@ -183,6 +194,7 @@ export default class UploadForm extends Component{
                                 <UploadButton
                                     uploadFiles={this.uploadFiles}
                                     uploading={this.state.uploading}
+                                    progress={this.state.progress}
                                 />
                              </td>
                         </tr>

@@ -39,7 +39,6 @@ export default class Body extends Component{
         .then((querySnapshot) => {
             let formattedData = []
             querySnapshot.forEach((doc) => {
-                console.log(doc.data())
                 const formattedDoc = {
                     name: doc.data().albumName,
                     date: new Date(doc.data().date.seconds*1000).toString(),
@@ -48,7 +47,6 @@ export default class Body extends Component{
                 }
                 formattedData.push(formattedDoc)
             })
-            console.log(formattedData)
             this.setData(formattedData)
         })
         .catch((error) => {

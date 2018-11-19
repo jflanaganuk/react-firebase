@@ -5,7 +5,10 @@ export default class UploadButton extends Component{
     render(){
         if (this.props.uploading) {
             return (
-                'Uploading'
+                <div 
+                    className={styles.uploadProgress}
+                    style={{width: this.props.progress + '%'}}
+                ></div>
             )
         }
         return (
