@@ -18,7 +18,7 @@ export default class UploadForm extends Component{
         const imagesRef = storageRef.child(firebase.auth().currentUser.uid)
 
         this.state = {
-            name: null,
+            name: '',
             files: null,
             ref: imagesRef,
             database: database,
@@ -34,6 +34,7 @@ export default class UploadForm extends Component{
         this.setPublic = this.setPublic.bind(this)
         this.setAlbum = this.setAlbum.bind(this)
         this.setUploading = this.setUploading.bind(this)
+        this.resetForm = this.resetForm.bind(this)
     }
 
     setFile = (e) => {
@@ -109,38 +110,73 @@ export default class UploadForm extends Component{
             console.log(docRef)
             this.setUploading(false)
             this.props.fetchUploads()
+            this.resetForm()
         })
         .catch((error) => {
             console.error(error)
             this.setUploading(false)
         })
     }
+
+    resetForm = () => {
+        document.getElementById('upload-form-container').reset()
+    }
     
     render(){
         return (
             <div>
                 <h2>Upload New File(s):</h2>
+                <form id='upload-form-container'>
                 <table>
                     <tbody>
                         <tr>
                             <td>Name</td>
                             <td>:</td>
-                            <td><input className={styles.uploadName} type="text" onChange={this.setName} placeholder="Enter file name"/></td>
+                            <td>
+                                <input 
+                                    className={styles.uploadName} 
+                                    type="text" 
+                                    onChange={this.setName} 
+                                    placeholder="Enter file name"
+                                    />
+                            </td>
                         </tr>
                         <tr>
                             <td>File(s)</td>
                             <td>:</td>
-                            <td><input className={styles.uploadFiles} type="file" onChange={this.setFile} multiple={true}/></td>
+                            <td>
+                                <input 
+                                    className={styles.uploadFiles} 
+                                    type="file" 
+                                    onChange={this.setFile} 
+                                    multiple={true}
+                                    />
+                            </td>
                         </tr>
                         <tr>
                             <td>Public</td>
                             <td>:</td>
-                            <td><input className={styles.uploadCheckbox} type="checkbox" onChange={this.setPublic} defaultChecked={true}/> (If checked, anyone can view your file)</td>
+                            <td>
+                                <input 
+                                    className={styles.uploadCheckbox} 
+                                    type="checkbox" 
+                                    onChange={this.setPublic} 
+                                    defaultChecked={true}
+                                    />
+                                     (If checked, anyone can view your file)
+                            </td>
                         </tr>
                         <tr>
                             <td>Album</td>
                             <td>:</td>
-                            <td><input className={styles.uploadCheckbox} type="checkbox" onChange={this.setAlbum}/> (If checked, all files will be presented as one entry)</td>
+                            <td>
+                                <input 
+                                    className={styles.uploadCheckbox} 
+                                    type="checkbox" 
+                                    onChange={this.setAlbum}
+                                    />
+                                     (If checked, all files will be presented as one entry)
+                            </td>
                         </tr>
                         <tr>
                             <td colSpan={3}>
@@ -152,6 +188,7 @@ export default class UploadForm extends Component{
                         </tr>
                     </tbody>
                 </table>
+                </form>
             </div>
         )
     }
