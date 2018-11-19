@@ -25,7 +25,8 @@ export default class UploadForm extends Component{
             public: true,
             album: false,
             uploading: false,
-            uploadProgress: 0
+            uploadProgress: 0,
+            description: ''
         }
 
         this.uploadFiles = this.uploadFiles.bind(this)
@@ -37,6 +38,7 @@ export default class UploadForm extends Component{
         this.setUploading = this.setUploading.bind(this)
         this.resetForm = this.resetForm.bind(this)
         this.setProgress = this.setProgress.bind(this)
+        this.setDescription = this.setDescription.bind(this)
     }
 
     setFile = (e) => {
@@ -81,6 +83,12 @@ export default class UploadForm extends Component{
         })
     }
 
+    setDescription = (e) => {
+        this.setState({
+            description: e.target.value
+        })
+    }
+
     uploadFiles(){
         const files = this.state.files
         if (files !== null) {
@@ -115,7 +123,8 @@ export default class UploadForm extends Component{
             name: name,
             public: this.state.public,
             album: this.state.album,
-            key: key
+            key: key,
+            description: this.state.description
         })
         .then((docRef) => {
             this.setUploading(false)
@@ -186,6 +195,16 @@ export default class UploadForm extends Component{
                                     onChange={this.setAlbum}
                                     />
                                      (If checked, all files will be presented as one entry)
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Description</td>
+                            <td>:</td>
+                            <td>
+                                <textarea
+                                    className={styles.uploadDescription}
+                                    onChange={this.setDescription}
+                                ></textarea>
                             </td>
                         </tr>
                         <tr>

@@ -81,6 +81,14 @@
     margin-bottom: 0.5rem;
 }
 
+:local(.uploadDescription){
+    padding: 0.5rem;
+    width: 100%;
+    font-size: 1rem;
+    border: none;
+    height: 4rem;
+}
+
 :local(.uploadButton){
     padding: 1rem;
     background-color: #4C93AF;

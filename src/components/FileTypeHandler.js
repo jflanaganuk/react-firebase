@@ -8,7 +8,8 @@ export default class FileTypeHandler extends Component{
 
         this.state = {
             url: '',
-            name: ''
+            name: '',
+            desc: ''
         }
 
         this.getFileFromStorage = this.getFileFromStorage.bind(this)
@@ -31,7 +32,7 @@ export default class FileTypeHandler extends Component{
             querySnapshot.forEach((doc) => {
                 const data = doc.data()
                 if (data.public || (data.user === userId)){
-                    this.getFileFromStorage(data.user, data.name, data.albumName)
+                    this.getFileFromStorage(data.user, data.name, data.albumName, data.description)
                 } else {
                     this.showPrivateMessage()
                 }
@@ -39,14 +40,15 @@ export default class FileTypeHandler extends Component{
         })
     }
 
-    getFileFromStorage(folder, file, name){
+    getFileFromStorage(folder, file, name, desc){
         const storage = firebase.storage()
 
         storage.ref().child(folder + '/' + file).getDownloadURL()
         .then((url) => {
             this.setState({
                 url: url,
-                name: name
+                name: name,
+                desc: desc
             })
         })
     }
@@ -70,6 +72,7 @@ export default class FileTypeHandler extends Component{
                     alt=''
                     style={{maxWidth: '100%', maxHeight: '50vh', margin: 'auto'}}
                 />
+                <p>{this.state.desc}</p>
                 <a href={this.state.url} target="_blank" type="application/octet-stream" rel="noopener noreferrer" download={this.state.name}>
                     download
                 </a>
