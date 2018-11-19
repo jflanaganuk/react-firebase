@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import ReactTable from 'react-table'
 import 'react-table/react-table.css'
+import styles from '../Body.scss'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faTimes, faEye } from '@fortawesome/free-solid-svg-icons'
 import { Link } from 'react-router-dom'
@@ -55,6 +56,7 @@ export default class UploadsContainer extends Component{
                     style={{maxHeight: '25rem'}}
                     showPagination={false}
                     noDataText="No uploads ...yet!"
+                    className={styles.reactTable}
                 />
             </div>
         )
