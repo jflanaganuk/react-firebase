@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import firebase from 'firebase'
+import FileEmbedder from './body/FileEmbedder'
 
 export default class FileTypeHandler extends Component{
 
@@ -9,11 +10,15 @@ export default class FileTypeHandler extends Component{
         this.state = {
             url: '',
             name: '',
-            desc: ''
+            desc: '',
+            type: '',
+            folder: '',
+            file: ''
         }
 
         this.getFileFromStorage = this.getFileFromStorage.bind(this)
         this.showPrivateMessage = this.showPrivateMessage.bind(this)
+        this.downloadFile = this.downloadFile.bind(this)
     }
 
     componentDidMount(){
@@ -32,7 +37,7 @@ export default class FileTypeHandler extends Component{
             querySnapshot.forEach((doc) => {
                 const data = doc.data()
                 if (data.public || (data.user === userId)){
-                    this.getFileFromStorage(data.user, data.name, data.albumName, data.description)
+                    this.getFileFromStorage(data.user, data.name, data.albumName, data.description, data.type)
                 } else {
                     this.showPrivateMessage()
                 }
@@ -40,7 +45,7 @@ export default class FileTypeHandler extends Component{
         })
     }
 
-    getFileFromStorage(folder, file, name, desc){
+    getFileFromStorage(folder, file, name, desc, type){
         const storage = firebase.storage()
 
         storage.ref().child(folder + '/' + file).getDownloadURL()
@@ -48,7 +53,10 @@ export default class FileTypeHandler extends Component{
             this.setState({
                 url: url,
                 name: name,
-                desc: desc
+                desc: desc,
+                type: type,
+                folder: folder,
+                file: file
             })
         })
     }
@@ -60,6 +68,38 @@ export default class FileTypeHandler extends Component{
         })
     }
 
+    downloadFile(){
+        const storage = firebase.storage()
+        storage.ref().child(this.state.folder + '/' + this.state.file).getDownloadURL().then(function(url) {
+            // `url` is the download URL for 'images/stars.jpg'
+          
+            // This can be downloaded directly:
+            var xhr = new XMLHttpRequest();
+            xhr.responseType = 'blob';
+            xhr.onload = function(event) {
+              var blob = xhr.response;
+
+              let a = document.createElement("a");
+                a.style = "display: none";
+                document.body.appendChild(a);
+                //Create a DOMString representing the blob 
+                //and point the link element towards it
+                let url = window.URL.createObjectURL(blob);
+                a.href = url;
+                a.download = '';
+                //programatically click the link to trigger the download
+                a.click();
+                //release the reference to the file by revoking the Object URL
+                window.URL.revokeObjectURL(url);
+            };
+            xhr.open('GET', url);
+            xhr.send();
+          
+          }).catch(function(error) {
+            // Handle any errors
+          });
+    }
+
     render(){
         if (this.state.url === '') {
             return <p>Loading...</p>
@@ -67,15 +107,12 @@ export default class FileTypeHandler extends Component{
         return (
             <div>
                 <h2>{this.state.name}</h2>
-                <img
-                    src={this.state.url}
-                    alt=''
-                    style={{maxWidth: '100%', maxHeight: '50vh', margin: 'auto'}}
+                <FileEmbedder
+                    type={this.state.type}
+                    url={this.state.url}
                 />
                 <p>{this.state.desc}</p>
-                <a href={this.state.url} target="_blank" type="application/octet-stream" rel="noopener noreferrer" download={this.state.name}>
-                    download
-                </a>
+                <button onClick={this.downloadFile}>Download</button>
             </div>
         )
     }

@@ -23,7 +23,6 @@ export default class UploadForm extends Component{
             ref: imagesRef,
             database: database,
             public: true,
-            album: false,
             uploading: false,
             uploadProgress: 0,
             description: ''
@@ -34,7 +33,6 @@ export default class UploadForm extends Component{
         this.setName = this.setName.bind(this)
         this.addFilePathToDatabase = this.addFilePathToDatabase.bind(this)
         this.setPublic = this.setPublic.bind(this)
-        this.setAlbum = this.setAlbum.bind(this)
         this.setUploading = this.setUploading.bind(this)
         this.resetForm = this.resetForm.bind(this)
         this.setProgress = this.setProgress.bind(this)
@@ -56,12 +54,6 @@ export default class UploadForm extends Component{
     setPublic = (e) => {
         this.setState({
             public: e.target.checked
-        })
-    }
-
-    setAlbum = (e) => {
-        this.setState({
-            album: e.target.checked
         })
     }
 
@@ -96,7 +88,7 @@ export default class UploadForm extends Component{
             const d = new Date()
             const seconds = Math.round(d.getTime() / 1000)
             Array.from(files).map((file, key) => {
-                const name = seconds + this.state.name + key
+                const name = seconds + (this.state.name.replace(/ /g, '')) + key
                 let uploadTask = this.state.ref.child(name).put(file)
                 uploadTask.on('state_changed', (snapshot) => {
                     const progress = (snapshot.bytesTransferred/snapshot.totalBytes) * 100
@@ -104,7 +96,7 @@ export default class UploadForm extends Component{
                 }, (error) => {
                     console.error(error)
                 }, () => {
-                    this.addFilePathToDatabase(key, name)
+                    this.addFilePathToDatabase(key, name, file.type)
                 })
                 return null
             })
@@ -113,7 +105,7 @@ export default class UploadForm extends Component{
         }
     }
 
-    addFilePathToDatabase(key, name){
+    addFilePathToDatabase(key, name, type){
         const formattedDate = new Date()
 
         this.state.database.collection("files").add({
@@ -122,9 +114,10 @@ export default class UploadForm extends Component{
             date: formattedDate,
             name: name,
             public: this.state.public,
-            album: this.state.album,
+            album: false,
             key: key,
-            description: this.state.description
+            description: this.state.description,
+            type: type
         })
         .then((docRef) => {
             this.setUploading(false)
@@ -186,24 +179,13 @@ export default class UploadForm extends Component{
                             </td>
                         </tr>
                         <tr>
-                            <td>Album</td>
-                            <td>:</td>
-                            <td>
-                                <input 
-                                    className={styles.uploadCheckbox} 
-                                    type="checkbox" 
-                                    onChange={this.setAlbum}
-                                    />
-                                     (If checked, all files will be presented as one entry)
-                            </td>
-                        </tr>
-                        <tr>
                             <td>Description</td>
                             <td>:</td>
                             <td>
                                 <textarea
                                     className={styles.uploadDescription}
                                     onChange={this.setDescription}
+                                    style={{resize: "none"}}
                                 ></textarea>
                             </td>
                         </tr>

@@ -17,18 +17,11 @@ export default class UserInfo extends Component{
                 />
                 <div className={styles.userInfoContainer}>
                     <div className={styles.userInfoContainerColumn}>
-                        <div className={styles.userInfoContainerCell}>Display Name</div>
-                        <div className={styles.userInfoContainerCell}>Email Address</div>
-                        <div className={styles.userInfoContainerCell}>Created at</div>
-                        <div className={styles.userInfoContainerCell}>Last sign in</div>
-                        <div className={styles.userInfoContainerCell}>Verified</div>
-                    </div>
-                    <div className={styles.userInfoContainerColumnThin}>
-                        <div className={styles.userInfoContainerCell}>:</div>
-                        <div className={styles.userInfoContainerCell}>:</div>
-                        <div className={styles.userInfoContainerCell}>:</div>
-                        <div className={styles.userInfoContainerCell}>:</div>
-                        <div className={styles.userInfoContainerCell}>:</div>
+                        <div className={styles.userInfoContainerCell}><b>Display Name</b></div>
+                        <div className={styles.userInfoContainerCell}><b>Email Address</b></div>
+                        <div className={styles.userInfoContainerCell}><b>Created at</b></div>
+                        <div className={styles.userInfoContainerCell}><b>Last sign in</b></div>
+                        <div className={styles.userInfoContainerCell}><b>Verified</b></div>
                     </div>
                     <div className={styles.userInfoContainerColumn}>
                         <div className={styles.userInfoContainerCell}>{user.displayName}</div>
