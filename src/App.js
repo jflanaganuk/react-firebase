@@ -9,6 +9,7 @@ import { BrowserRouter as Router, Route } from 'react-router-dom'
 import Portal from './components/navigation/Portal'
 import About from './components/navigation/About'
 import Contact from './components/navigation/Contact'
+import UploadViewer from './components/navigation/UploadViewer'
 
 const config = {
 	apiKey: "AIzaSyD3taQFpVwhb6VOgWTn62gO725-qknCc5Q",
@@ -60,6 +61,7 @@ class App extends Component {
 						<Route path='/portal/' component={Portal}/>
 						<Route path='/about/' component={About}/>
 						<Route path='/contact/' component={Contact}/>
+						<Route path='/view/' component={UploadViewer}/>
 					</div>
 					}
 					<Footer />

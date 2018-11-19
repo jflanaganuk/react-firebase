@@ -40,6 +40,7 @@ export default class Body extends Component{
             let formattedData = []
             querySnapshot.forEach((doc) => {
                 const formattedDoc = {
+                    trueName: doc.data().name,
                     name: doc.data().albumName,
                     date: new Date(doc.data().date.seconds*1000).toString(),
                     public: (doc.data().public ? <FontAwesomeIcon icon={faLockOpen}/> : <FontAwesomeIcon icon={faLock}/>),
