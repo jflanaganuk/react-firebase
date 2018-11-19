@@ -82,7 +82,6 @@ export default class UploadForm extends Component{
     }
 
     uploadFiles(){
-        //TODO - progress
         const files = this.state.files
         if (files !== null) {
             this.setUploading(true)

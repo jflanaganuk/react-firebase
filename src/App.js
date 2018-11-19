@@ -5,6 +5,10 @@ import Signin from './components/body/Signin'
 import Footer from './components/Footer'
 import Header from './components/Header'
 import Body from './components/Body'
+import { BrowserRouter as Router, Route } from 'react-router-dom'
+import Portal from './components/navigation/Portal'
+import About from './components/navigation/About'
+import Contact from './components/navigation/Contact'
 
 const config = {
 	apiKey: "AIzaSyD3taQFpVwhb6VOgWTn62gO725-qknCc5Q",
@@ -39,21 +43,28 @@ class App extends Component {
 
 	render() {
 		return (
-			<div>
-				<Header 
-					signedIn={this.state.isSignedIn}
-					setSignIn={this.setSignIn}
-				/>
-				{(!this.state.isSignedIn) 
-				? 
-					<Signin
+			<Router>
+				<div>
+					<Header 
+						signedIn={this.state.isSignedIn}
 						setSignIn={this.setSignIn}
 					/>
-				:
-					<Body />
-				}
-				<Footer />
-			</div>
+					{(!this.state.isSignedIn) 
+					? 
+						<Signin
+							setSignIn={this.setSignIn}
+						/>
+					:
+					<div>
+						<Route path='/' exact component={Body}/>
+						<Route path='/portal/' component={Portal}/>
+						<Route path='/about/' component={About}/>
+						<Route path='/contact/' component={Contact}/>
+					</div>
+					}
+					<Footer />
+				</div>
+			</Router>
 		);
 	}
 }

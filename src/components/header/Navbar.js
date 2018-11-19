@@ -3,6 +3,7 @@ import styles from '../Header.scss'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faBars } from '@fortawesome/free-solid-svg-icons'
 import firebase from 'firebase'
+import { Link } from 'react-router-dom'
 
 export default class Navbar extends Component{
 
@@ -70,12 +71,20 @@ export default class Navbar extends Component{
                 className={containerClass}
                 id="navbar"
             >
-                <a href="#home" className="active">Home</a>
-                <a href="#portal">Portal</a>
-                <a href="#about">About</a>
-                <a href="#contact">Contact</a>
                 {(this.props.signedIn) &&
-                <a href="#" className="right" onClick={() => firebase.auth().signOut()}>Logout</a> // eslint-disable-line
+                <Link to='/' className="active">Home</Link>
+                }
+                {(this.props.signedIn) &&
+                <Link to='/portal/'>Portal</Link>
+                }
+                {(this.props.signedIn) &&
+                <Link to='/about/'>About</Link>
+                }
+                {(this.props.signedIn) &&
+                <Link to='/contact/'>Contact</Link>
+                }
+                {(this.props.signedIn) &&
+                <Link to="/" className="right" onClick={() => firebase.auth().signOut()}>Logout</Link>
                 }
                 {(this.props.signedIn) &&
                 <span className={styles.welcomeMessage}>Welcome {firebase.auth().currentUser.displayName} !</span>
