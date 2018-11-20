@@ -2,8 +2,9 @@ import React, { Component } from 'react'
 import ReactTable from 'react-table'
 import 'react-table/react-table.css'
 import styles from '../Body.scss'
+import DeleteButton from './DeleteButton'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faTimes, faEye } from '@fortawesome/free-solid-svg-icons'
+import { faEye } from '@fortawesome/free-solid-svg-icons'
 import { Link } from 'react-router-dom'
 
 export default class UploadsContainer extends Component{
@@ -36,7 +37,11 @@ export default class UploadsContainer extends Component{
             },
             {
                 Header: 'Delete',
-                Cell: <FontAwesomeIcon icon={faTimes}/>,
+                accessor: 'trueName',
+                Cell: row => <DeleteButton 
+                                file={row.value}
+                                callback={this.props.fetchUploads}    
+                                />,
                 width: 64
             }
         ]
