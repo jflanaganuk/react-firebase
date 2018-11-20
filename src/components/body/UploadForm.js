@@ -117,7 +117,8 @@ export default class UploadForm extends Component{
             album: false,
             key: key,
             description: this.state.description,
-            type: type
+            type: type,
+            author: firebase.auth().currentUser.displayName
         })
         .then((docRef) => {
             this.setUploading(false)

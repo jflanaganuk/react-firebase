@@ -26,6 +26,10 @@ export default class PortalViewer extends Component{
                 accessor: 'name'
             },
             {
+                Header: 'Author',
+                accessor: 'author'
+            },
+            {
                 Header: 'Uploaded',
                 accessor: 'date'
             }

@@ -38,7 +38,8 @@ export default class Portal extends Component{
                     trueName: doc.data().name,
                     name: doc.data().albumName,
                     date: new Date(doc.data().date.seconds*1000).toString(),
-                    key: doc.data().key
+                    key: doc.data().key,
+                    author: doc.data().author
                 }
                 formattedData.push(formattedDoc)
             })
