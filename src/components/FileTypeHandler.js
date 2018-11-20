@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import firebase from 'firebase'
 import FileEmbedder from './body/FileEmbedder'
+import styles from './navigation/UploadViewer.scss'
 
 export default class FileTypeHandler extends Component{
 
@@ -22,7 +23,6 @@ export default class FileTypeHandler extends Component{
     }
 
     componentDidMount(){
-        //TODO - handle more than images
         const database = firebase.firestore()
         database.settings({
             timestampsInSnapshots: true
@@ -105,14 +105,21 @@ export default class FileTypeHandler extends Component{
             return <p>Loading...</p>
         }
         return (
-            <div>
-                <h2>{this.state.name}</h2>
-                <FileEmbedder
-                    type={this.state.type}
-                    url={this.state.url}
-                />
-                <p>{this.state.desc}</p>
-                <button onClick={this.downloadFile}>Download</button>
+            <div className={styles.uploadContainer}>
+                <div className={styles.uploadLeft}>
+                    <FileEmbedder
+                        type={this.state.type}
+                        url={this.state.url}
+                    />
+                </div>
+                <div className={styles.uploadRight}>
+                    <h2>{this.state.name}</h2>
+                    <p>{this.state.desc}</p>
+                    <button 
+                        onClick={this.downloadFile}
+                        className={styles.downloadButton}
+                    >Download</button>
+                </div>
             </div>
         )
     }

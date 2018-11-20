@@ -9,11 +9,9 @@ export default class UploadViewer extends Component{
         const file = search.replace('?filename=','')
         return (
             <div className={styles.bodyContainer}>
-                <div className={styles.uploadContainer}>
-                    <FileTypeHandler
-                        file={file}
-                    />
-                </div>
+                <FileTypeHandler
+                    file={file}
+                />
             </div>
         )
     }
