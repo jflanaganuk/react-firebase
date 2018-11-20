@@ -1,11 +1,10 @@
 import React, { Component } from 'react'
 import styles from './Body.scss'
 import firebase from 'firebase'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faLock, faLockOpen } from '@fortawesome/free-solid-svg-icons'
 import UserInfo from './body/UserInfo'
 import UploadForm from './body/UploadForm'
 import UploadsContainer from './body/UploadsContainer'
+import PrivacyToggle from './body/PrivacyToggle';
 
 export default class Body extends Component{
 
@@ -43,7 +42,10 @@ export default class Body extends Component{
                     trueName: doc.data().name,
                     name: doc.data().albumName,
                     date: new Date(doc.data().date.seconds*1000).toString(),
-                    public: (doc.data().public ? <FontAwesomeIcon icon={faLockOpen}/> : <FontAwesomeIcon icon={faLock}/>),
+                    public: <PrivacyToggle 
+                                public={doc.data().public}
+                                file={doc.data().name}
+                                />,
                     key: doc.data().key
                 }
                 formattedData.push(formattedDoc)
