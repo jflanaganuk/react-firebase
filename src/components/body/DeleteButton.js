@@ -47,7 +47,6 @@ export default class DeleteButton extends Component{
                     storage.ref().child(data.user + '/' + data.name)
                     .delete()
                     .then(() => {
-                        console.log("File removed from storage", this.props.file)
                         this.deleteFileFromDatabase()
                     })
                     .catch((err) => {
@@ -72,12 +71,10 @@ export default class DeleteButton extends Component{
         .get()
         .then((querySnapshot) => {
             querySnapshot.forEach((doc) => {
-                console.log(doc)
                 const id = doc.id
                 database.collection("files").doc(id)
                 .delete()
                 .then(() => {
-                    console.log("Document succesfully deleted", this.props.file)
                     this.setState({
                         pressed: false
                     })

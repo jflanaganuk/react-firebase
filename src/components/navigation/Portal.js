@@ -32,7 +32,6 @@ export default class Portal extends Component{
         docCollection.where("public","==", true)
         .get()
         .then((querySnapshot) => {
-            console.log(querySnapshot)
             let formattedData = []
             querySnapshot.forEach((doc) => {
                 const formattedDoc = {

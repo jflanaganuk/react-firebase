@@ -47,7 +47,7 @@ export default class PrivacyToggle extends Component{
                         })
                     })
                     .catch((err) => {
-                        console.log("Error editing document", err)
+                        console.error("Error editing document", err)
                     })
                 } else {
                     console.error("You cannot edit other peoples documents")

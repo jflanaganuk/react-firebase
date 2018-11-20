@@ -14,7 +14,6 @@ export default class UploadsContainer extends Component{
     }
 
     render(){
-        console.log(this.props.data)
         const columns = [
             {
                 Header: 'View',

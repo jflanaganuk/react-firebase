@@ -12,11 +12,13 @@ export default class Navbar extends Component{
 
         this.state = {
             expanded: false,
-            scrolled: false
+            scrolled: false,
+            activePage: "home"
         }
 
         this.setExpanded = this.setExpanded.bind(this)
         this.setScroll = this.setScroll.bind(this)
+        this.setActivePage = this.setActivePage.bind(this)
     }
 
     componentDidMount(){
@@ -58,6 +60,12 @@ export default class Navbar extends Component{
         })
     }
 
+    setActivePage(input){
+        this.setState({
+            activePage: input
+        })
+    }
+
     render(){
         let containerClass = styles.navbar
         if (this.state.scrolled) {
@@ -72,16 +80,18 @@ export default class Navbar extends Component{
                 id="navbar"
             >
                 {(this.props.signedIn) &&
-                <Link to='/' className="active">Home</Link>
+                <Link 
+                    to='/' 
+                    className={this.state.activePage === "home" ? "active" : ""}
+                    onClick={() => this.setActivePage("home")}
+                >Home</Link>
                 }
                 {(this.props.signedIn) &&
-                <Link to='/portal/'>Portal</Link>
-                }
-                {(this.props.signedIn) &&
-                <Link to='/about/'>About</Link>
-                }
-                {(this.props.signedIn) &&
-                <Link to='/contact/'>Contact</Link>
+                <Link 
+                    to='/portal/' 
+                    className={this.state.activePage === "portal" ? "active" : ""}
+                    onClick={() => this.setActivePage("portal")}
+                >Portal</Link>
                 }
                 {(this.props.signedIn) &&
                 <Link to="/" className="right" onClick={() => firebase.auth().signOut()}>Logout</Link>
